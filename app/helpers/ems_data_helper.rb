@@ -1,0 +1,2 @@
+module EmsDataHelper
+end

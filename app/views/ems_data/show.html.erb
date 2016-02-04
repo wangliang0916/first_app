@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Tagname:</strong>
+  <%= @ems_datum.tagname %>
+</p>
+
+<p>
+  <strong>Value:</strong>
+  <%= @ems_datum.value %>
+</p>
+
+<%= link_to 'Edit', edit_ems_datum_path(@ems_datum) %> |
+<%= link_to 'Back', ems_data_path %>

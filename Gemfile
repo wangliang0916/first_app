@@ -1,5 +1,5 @@
-#source 'https://rubygems.org'
-source 'https://ruby.taobao.org'
+source 'https://rubygems.org'
+#source 'https://ruby.taobao.org'
 
 
 gem 'rails', '4.1.4'
@@ -17,3 +17,9 @@ end
 gem 'jquery-rails', '3.1.4'
 
 gem 'tzinfo-data', '1.2016.1', platforms: [:mingw, :mswin]
+
+gem 'turbolinks', '2.5.3'
+
+group :production do
+	gem 'pg', '0.18.4'
+end
