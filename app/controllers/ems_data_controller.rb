@@ -48,13 +48,23 @@ class EmsDataController < ApplicationController
     redirect_to ems_data_url, notice: 'Ems datum was successfully destroyed.'
   end
   
-  def weixin
+  def weixin_auth
      if check_signature?(params[:signature],params[:timestamp],params[:nonce])  
 	return render text: params[:echostr]
      else
         return render text: "wrong weixin auth"	     
      end
   end
+  
+  def weixin_process
+     if check_signature?(params[:signature],params[:timestamp],params[:nonce])  
+	render "weixin", layout: false, :formats => :xml  
+     else
+        return render text: "wrong weixin auth"	     
+     end
+   end
+
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.

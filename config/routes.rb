@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  match "weixin", :to => "ems_data#weixin", via:[:get]
+  get "weixin", :to => "ems_data#weixin_auth"
+  post "weixin", :to => "ems_data#weixin_process"
   
   resources :ems_data
 
