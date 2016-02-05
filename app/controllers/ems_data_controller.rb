@@ -1,4 +1,7 @@
+require 'digest/sha1' 
+
 class EmsDataController < ApplicationController
+  @@token = "laas"
   before_action :set_ems_datum, only: [:show, :edit, :update, :destroy]
 
   # GET /ems_data
@@ -44,6 +47,14 @@ class EmsDataController < ApplicationController
     @ems_datum.destroy
     redirect_to ems_data_url, notice: 'Ems datum was successfully destroyed.'
   end
+  
+  def weixin
+     if check_signature?(params[:signature],params[:timestamp],params[:nonce])  
+	return render text: params[:echostr]
+     else
+        return render text: "wrong weixin auth"	     
+     end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -55,4 +66,13 @@ class EmsDataController < ApplicationController
     def ems_datum_params
       params.require(:ems_datum).permit(:tagname, :value)
     end
+    
+    def check_signature?(signature,timestamp,nonce)
+	begin
+		Digest::SHA1.hexdigest([timestamp,nonce,@@token].sort.join) == signature 
+	rescue
+		false
+	end
+    end  
+ 
 end

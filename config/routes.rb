@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  match "weixin", :to => "ems_data#weixin", via:[:get]
+  
   resources :ems_data
 
   # The priority is based upon order of creation: first created -> highest priority.
