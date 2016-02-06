@@ -23,3 +23,5 @@ gem 'turbolinks', '2.5.3'
 group :production do
 	gem 'pg', '0.18.4'
 end
+
+gem 'actionpack-xml_parser', '1.0.2'

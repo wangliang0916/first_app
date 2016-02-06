@@ -2,6 +2,8 @@ require 'digest/sha1'
 
 class EmsDataController < ApplicationController
   @@token = "laas"
+  skip_before_filter :verify_authenticity_token
+
   before_action :set_ems_datum, only: [:show, :edit, :update, :destroy]
 
   # GET /ems_data
@@ -58,9 +60,15 @@ class EmsDataController < ApplicationController
   
   def weixin_process
      if check_signature?(params[:signature],params[:timestamp],params[:nonce])  
-	render "weixin", layout: false, :formats => :xml  
+       #~ render text: ""
+	@datas = ""
+	@ems_data = EmsDatum.all
+	@ems_data.each do |item| 
+		@datas << item.tagname  << ":" << item.value << "\n"
+	end 	
+	render :weixin, layout: false, :formats => :xml  
      else
-        return render text: "wrong weixin auth"	     
+       render text: ""	     
      end
    end
 

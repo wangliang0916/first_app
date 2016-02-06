@@ -1,5 +1,5 @@
 GEM
-  remote: https://rubygems.org/
+  remote: https://ruby.taobao.org/
   specs:
     actionmailer (4.1.4)
       actionpack (= 4.1.4)
@@ -10,6 +10,8 @@ GEM
       activesupport (= 4.1.4)
       rack (~> 1.5.2)
       rack-test (~> 0.6.2)
+    actionpack-xml_parser (1.0.2)
+      actionpack (>= 4.0.0, < 5)
     actionview (4.1.4)
       activesupport (= 4.1.4)
       builder (~> 3.1)
@@ -107,6 +109,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  actionpack-xml_parser (= 1.0.2)
   coffee-rails (= 4.0.1)
   jquery-rails (= 3.1.4)
   pg (= 0.18.4)
