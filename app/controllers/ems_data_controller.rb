@@ -37,6 +37,7 @@ class EmsDataController < ApplicationController
 
   # PATCH/PUT /ems_data/1
   def update
+    #~ render text: params	  
     if @ems_datum.update(ems_datum_params)
       redirect_to @ems_datum, notice: 'Ems datum was successfully updated.'
     else

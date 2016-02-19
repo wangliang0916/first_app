@@ -3,7 +3,12 @@ Rails.application.routes.draw do
   post "weixin", :to => "ems_data#weixin_process"
   
   resources :ems_data
-
+  
+  namespace :api do
+    namespace :v1 do
+      resources :weixin, only: [:index, :create, :show, :update, :destroy]
+    end
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
