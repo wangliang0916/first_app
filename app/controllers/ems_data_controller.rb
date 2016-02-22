@@ -62,14 +62,30 @@ class EmsDataController < ApplicationController
   def weixin_process
      if check_signature?(params[:signature],params[:timestamp],params[:nonce])  
        #~ render text: ""
-	@datas = ""
-	@ems_data = EmsDatum.all
-	@ems_data.each do |item| 
-		@datas << item.tagname  << ":" << item.value << "\n"
-	end 	
+	@datas = "回复1，查看水用量\n"
+	@datas << "回复2，查看电用量\n"
+	@datas << "回复3，查看煤用量\n"
+	@datas << "回复其他，查看所有介质用量\n"
+	case params[:xml][:Content]
+	when '1'
+		item = EmsDatum.find(1)
+		@datas << item.tagname  << ":" << item.value
+		
+	when '2'
+		item = EmsDatum.find(2)
+		@datas << item.tagname  << ":" << item.value
+	when '3'
+		item = EmsDatum.find(3)
+		@datas << item.tagname  << ":" << item.value
+	else
+		@ems_data = EmsDatum.all
+		@ems_data.each do |item| 
+			@datas << item.tagname  << ":" << item.value << "\n"
+		end 	
+	end
 	render :weixin, layout: false, :formats => :xml  
      else
-       render text: ""	     
+       render text: ""
      end
    end
 
