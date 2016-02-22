@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'digest/sha1' 
 
 class EmsDataController < ApplicationController
@@ -61,16 +62,14 @@ class EmsDataController < ApplicationController
   
   def weixin_process
      if check_signature?(params[:signature],params[:timestamp],params[:nonce])  
-       #~ render text: ""
-	@datas = "回复1，查看水用量\n"
-	@datas << "回复2，查看电用量\n"
-	@datas << "回复3，查看煤用量\n"
-	@datas << "回复其他，查看所有介质用量\n"
+ 	@datas = "鍥炲1锛屾煡鐪嬫按鐢ㄩ噺\n"
+	@datas << "鍥炲2锛屾煡鐪嬬數鐢ㄩ噺\n"
+	@datas << "鍥炲3锛屾煡鐪嬬叅鐢ㄩ噺\n"
+	@datas << "鍥炲鍏朵粬锛屾煡鐪嬫墍鏈変粙璐ㄧ敤閲廫n"
 	case params[:xml][:Content]
 	when '1'
 		item = EmsDatum.find(1)
 		@datas << item.tagname  << ":" << item.value
-		
 	when '2'
 		item = EmsDatum.find(2)
 		@datas << item.tagname  << ":" << item.value
