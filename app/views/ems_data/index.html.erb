@@ -5,6 +5,7 @@
     <tr>
       <th>Tagname</th>
       <th>Value</th>
+      <th>Group</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -14,6 +15,7 @@
       <tr>
         <td><%= ems_datum.tagname %></td>
         <td><%= ems_datum.value %></td>
+        <td><%= ems_datum.group %></td>
         <td><%= link_to 'Show', ems_datum %></td>
         <td><%= link_to 'Edit', edit_ems_datum_path(ems_datum) %></td>
         <td><%= link_to 'Destroy', ems_datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>

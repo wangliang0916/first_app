@@ -1,5 +1,6 @@
 # encoding: utf-8
 require 'digest/sha1' 
+require 'json'
 
 class EmsDataController < ApplicationController
   @@token = "laas"
@@ -38,7 +39,11 @@ class EmsDataController < ApplicationController
 
   # PATCH/PUT /ems_data/1
   def update
-    #~ render text: params	  
+   #~ render text: 'hi'
+   #~ json_params = ActionController::Parameters.new( JSON.parse(request.body.read) )
+   #~ render text: json_params
+   #~ render text: params
+   #~ render text: "{'data':#{params[:data]}}"  
     if @ems_datum.update(ems_datum_params)
       redirect_to @ems_datum, notice: 'Ems datum was successfully updated.'
     else
@@ -62,26 +67,20 @@ class EmsDataController < ApplicationController
   
   def weixin_process
      if check_signature?(params[:signature],params[:timestamp],params[:nonce])  
- 	@datas = "回复1，查看水用量\n"
-	@datas << "回复2，查看电用量\n"
-	@datas << "回复3，查看煤用量\n"
-	@datas << "回复其他，查看所有介质用量\n"
-	case params[:xml][:Content]
-	when '1'
-		item = EmsDatum.find(1)
-		@datas << item.tagname  << ":" << item.value
-	when '2'
-		item = EmsDatum.find(2)
-		@datas << item.tagname  << ":" << item.value
-	when '3'
-		item = EmsDatum.find(3)
-		@datas << item.tagname  << ":" << item.value
+	id = params[:xml][:Content]
+	@datas = ""
+	if ['1', '2', '3'].include?(id) then
+		@ems_data = EmsDatum.where(group: id)
 	else
+		@datas << "回复1，查看水用量\n"
+		@datas << "回复2，查看电用量\n"
+		@datas << "回复3，查看煤用量\n"
+		@datas << "回复其他，查看所有介质用量\n"
 		@ems_data = EmsDatum.all
-		@ems_data.each do |item| 
-			@datas << item.tagname  << ":" << item.value << "\n"
-		end 	
 	end
+	@ems_data.each do |item| 
+		@datas << "#{item.tagname}:#{item.value}\n"
+	end 	
 	render :weixin, layout: false, :formats => :xml  
      else
        render text: ""
@@ -98,7 +97,7 @@ class EmsDataController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def ems_datum_params
-      params.require(:ems_datum).permit(:tagname, :value)
+      params.require(:ems_datum).permit(:tagname, :value, :group)
     end
     
     def check_signature?(signature,timestamp,nonce)
