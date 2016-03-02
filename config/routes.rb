@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :weixin, only: [:index, :create, :show, :update, :destroy]
+      patch "datas", :to => "weixin#batch_update"
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.
