@@ -11,6 +11,21 @@ class EmsDataController < ApplicationController
   # GET /ems_data
   def index
     @ems_data = EmsDatum.all
+    	#~ group_id = '4'
+	#~ @datas = ""
+	#~ if ['1', '2', '3'].include?(group_id) then
+		#~ @ems_data = EmsDatum.where(group: group_id).order(:id)
+	#~ else
+		#~ @datas << "回复1，查看水用量\n"
+		#~ @datas << "回复2，查看电用量\n"
+		#~ @datas << "回复3，查看煤用量\n"
+		#~ @datas << "回复其他，查看所有介质用量\n"
+		#~ @ems_data = EmsDatum.all.order(:id)
+	#~ end
+	#~ @ems_data.each do |item| 
+		#~ @datas << "#{item.tagname}:#{item.value}\n"
+	#~ end 	
+	#~ render text: @datas
   end
 
   # GET /ems_data/1
@@ -67,16 +82,16 @@ class EmsDataController < ApplicationController
   
   def weixin_process
      if check_signature?(params[:signature],params[:timestamp],params[:nonce])  
-	id = params[:xml][:Content]
+	group_id = params[:xml][:Content]
 	@datas = ""
-	if ['1', '2', '3'].include?(id) then
-		@ems_data = EmsDatum.where(group: id)
+	if ['1', '2', '3'].include?(group_id) then
+		@ems_data = EmsDatum.where(group: group_id).order(:id)
 	else
 		@datas << "回复1，查看水用量\n"
 		@datas << "回复2，查看电用量\n"
 		@datas << "回复3，查看煤用量\n"
 		@datas << "回复其他，查看所有介质用量\n"
-		@ems_data = EmsDatum.all
+		@ems_data = EmsDatum.all.order(:id)
 	end
 	@ems_data.each do |item| 
 		@datas << "#{item.tagname}:#{item.value}\n"
