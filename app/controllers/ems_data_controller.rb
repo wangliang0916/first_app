@@ -87,10 +87,10 @@ class EmsDataController < ApplicationController
 	if ['1', '2', '3'].include?(group_id) then
 		@ems_data = EmsDatum.where(group: group_id).order(:id)
 	else
-		@datas << "回复1，查看水用量\n"
-		@datas << "回复2，查看电用量\n"
-		@datas << "回复3，查看煤用量\n"
-		@datas << "回复其他，查看所有介质用量\n"
+		@datas << "回复1，查看联合工房各区域温湿度\n"
+		@datas << "回复2，查看能源供应实时数据\n"
+		@datas << "回复3，查看联合工房卷烟机包装机运行状态\n"
+		@datas << "回复其他，查看所有数据\n"
 		@ems_data = EmsDatum.all.order(:id)
 	end
 	@ems_data.each do |item| 
