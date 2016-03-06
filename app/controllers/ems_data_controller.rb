@@ -84,18 +84,17 @@ class EmsDataController < ApplicationController
      if check_signature?(params[:signature],params[:timestamp],params[:nonce])  
 	group_id = params[:xml][:Content]
 	@datas = ""
-	if ['1', '2', '3'].include?(group_id) then
-		@ems_data = EmsDatum.where(group: group_id).order(:id)
+	if ['1', '2', '3','4'].include?(group_id) then
+		ems_data = EmsDatum.where(group: group_id).order(:id)
+		ems_data.each do |item| 
+			@datas << "#{item.tagname}:#{item.value}\n"
+		end 	
 	else
 		@datas << "回复1，查看联合工房各区域温湿度\n"
 		@datas << "回复2，查看能源供应实时数据\n"
 		@datas << "回复3，查看联合工房卷烟机包装机运行状态\n"
-		@datas << "回复其他，查看所有数据\n"
-		@ems_data = EmsDatum.all.order(:id)
+		@datas << "回复4，查看机组空压气"
 	end
-	@ems_data.each do |item| 
-		@datas << "#{item.tagname}:#{item.value}\n"
-	end 	
 	render :weixin, layout: false, :formats => :xml  
      else
        render text: ""
