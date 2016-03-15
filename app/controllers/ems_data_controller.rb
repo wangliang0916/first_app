@@ -89,13 +89,16 @@ class EmsDataController < ApplicationController
 		ems_data.each do |item| 
 			@datas << "#{item.tagname}: #{item.value}\n"
 		end 	
+		render :weixin, layout: false, :formats => :xml  
+	else if group_id == 't' then
+		render :pic, layout: false, :formats => :xml  
 	else
 		@datas << "回复1，查看联合工房各区域温湿度\n"
 		@datas << "回复2，查看能源供应实时数据\n"
 		@datas << "回复3，查看联合工房1-9号机组运行状态\n"
 		@datas << "回复4，查看联合工房10-19号机组运行状态"
+		render :weixin, layout: false, :formats => :xml  
 	end
-	render :weixin, layout: false, :formats => :xml  
      else
        render text: ""
      end
