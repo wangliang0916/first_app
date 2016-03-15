@@ -90,7 +90,7 @@ class EmsDataController < ApplicationController
 			@datas << "#{item.tagname}: #{item.value}\n"
 		end 	
 		render :weixin, layout: false, :formats => :xml  
-	else if group_id == 't' then
+	elsif group_id == 't' then
 		render :pic, layout: false, :formats => :xml  
 	else
 		@datas << "回复1，查看联合工房各区域温湿度\n"
