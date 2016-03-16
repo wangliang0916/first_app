@@ -10,7 +10,7 @@ class EmsDataController < ApplicationController
 
   # GET /ems_data
   def index
-    @ems_data = EmsDatum.all
+    #~ @ems_data = EmsDatum.all
     	#~ group_id = '4'
 	#~ @datas = ""
 	#~ if ['1', '2', '3'].include?(group_id) then
@@ -26,6 +26,9 @@ class EmsDataController < ApplicationController
 		#~ @datas << "#{item.tagname}:#{item.value}\n"
 	#~ end 	
 	#~ render text: @datas
+	
+	render :pic, layout: false, :formats => :xml  
+
   end
 
   # GET /ems_data/1
