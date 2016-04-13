@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'static/demo'
+
   get "weixin", :to => "ems_data#weixin_auth"
   post "weixin", :to => "ems_data#weixin_process"
   
